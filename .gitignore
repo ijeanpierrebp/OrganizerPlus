@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /ToDo/ToDo/appsettings.json
+/ToDo/ToDo/client_secret_766645434189-486f5frg1jie2jef9f4eqjehcnnr3re0.apps.googleusercontent.com.json
