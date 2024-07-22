@@ -26,28 +26,28 @@ builder.Services.AddAuthentication(options =>
         options.DefaultScheme = IdentityConstants.ApplicationScheme;
         options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
     })
-    .AddGoogle(google => { 
-        google.ClientId = builder.Configuration.GetValue<string>("Auth:Google:ClientId"); 
-        google.ClientSecret = builder.Configuration.GetValue<string>("Auth:Google:ClientSecret");
-        google.Events.OnTicketReceived = async context =>
-        {
-            // Extraer el correo electrónico del usuario
-            var email = context.Principal.FindFirstValue(ClaimTypes.Email);
+    //.AddGoogle(google => { 
+    //    google.ClientId = builder.Configuration.GetValue<string>("Auth:Google:ClientId"); 
+    //    google.ClientSecret = builder.Configuration.GetValue<string>("Auth:Google:ClientSecret");
+    //    google.Events.OnTicketReceived = async context =>
+    //    {
+    //        // Extraer el correo electrónico del usuario
+    //        var email = context.Principal.FindFirstValue(ClaimTypes.Email);
 
-            // Guardar el correo electrónico en la base de datos
-            using (var scope = context.HttpContext.RequestServices.CreateScope())
-            {
-                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                var user = new ApplicationUser { Email = email };
-                dbContext.Users.Add(user);
-                await dbContext.SaveChangesAsync();
-            }
-        };
-    }   
-    )
+    //        // Guardar el correo electrónico en la base de datos
+    //        using (var scope = context.HttpContext.RequestServices.CreateScope())
+    //        {
+    //            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    //            var user = new ApplicationUser { Email = email };
+    //            dbContext.Users.Add(user);
+    //            await dbContext.SaveChangesAsync();
+    //        }
+    //    };
+    //}   
+    //)
     .AddIdentityCookies();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("Dev") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
